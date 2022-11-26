@@ -1,0 +1,3 @@
+- 1 module có thể có nhiều controller
+- file dto : dùng để validate các data được truyền lên
+- Repository : https://hoclaptrinh.vn/posts/the-repository-design-pattern
