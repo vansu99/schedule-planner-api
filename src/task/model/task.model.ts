@@ -5,7 +5,7 @@ const TaskSchema = new Schema(
     name: String,
     content: String,
   },
-  { timestamps: true, collection: 'card' },
+  { timestamps: true, collection: 'Task' },
 );
 
 export { TaskSchema };

@@ -15,7 +15,7 @@ import { TaskService } from '../service/task.service';
 export class TaskController {
   constructor(private readonly taskService: TaskService) {}
 
-  @Get()
+  @Get('list')
   getAllTask(@Query() query: any) {
     return this.taskService.all(query);
   }
@@ -25,7 +25,7 @@ export class TaskController {
     return this.taskService.detail(id);
   }
 
-  @Post()
+  @Post('create')
   async createTask(@Body() task: CreateTaskDto) {
     return this.taskService.create(task);
   }
