@@ -13,9 +13,9 @@ interface Task {
 }
 
 interface User {
-  id: string;
   name: string;
   address: string;
+  avatar: string;
   phone_number: number;
   company_name: string;
 }
