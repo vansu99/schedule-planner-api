@@ -14,6 +14,13 @@ const UserSchema = new Schema(
   { timestamps: true, collection: 'users' }
 )
 
+UserSchema.set('toJSON', {
+  transform: (doc, set, opt) => {
+    delete set.password
+    return set
+  },
+})
+
 export { UserSchema }
 
 export interface User extends Document {

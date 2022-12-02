@@ -48,9 +48,12 @@ export class UserService {
    * @author EvanC
    */
   async findByEmail(email: string) {
-    return await this.userRepository.findByCondition({
+    const user = await this.userRepository.findByCondition({
       email,
+      select: ['-password'],
     })
+
+    return user
   }
 
   /**
@@ -73,16 +76,16 @@ export class UserService {
     if (!user) {
       throw new HttpException('Invalid token', HttpStatus.UNAUTHORIZED)
     }
-    // const is_equal = await bcrypt.compare(this.reverse(refresh_token), user.refreshToken)
+    const is_equal = await bcrypt.compare(this.reverse(refresh_token), user.refreshToken)
 
-    // if (!is_equal) {
-    //   throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED)
-    // }
+    if (!is_equal) {
+      throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED)
+    }
 
     return user
   }
 
-  private reverse(s) {
+  private reverse(s: string) {
     return s.split('').reverse().join('')
   }
 }

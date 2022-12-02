@@ -12,7 +12,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     })
   }
 
-  async validate({ email }) {
+  async validate({ email }): Promise<any> {
     const user = await this.authService.validateUser(email)
 
     if (!user) {

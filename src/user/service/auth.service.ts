@@ -33,7 +33,6 @@ export class AuthService {
    */
   async validateUser(email: string) {
     const user = await this.userService.findByEmail(email)
-    console.log({ user })
     if (!user) {
       throw new HttpException('Invalid token', HttpStatus.UNAUTHORIZED)
     }
@@ -48,6 +47,7 @@ export class AuthService {
         expiresIn: process.env.EXPIRES_IN,
       }
     )
+
     if (refresh) {
       const refreshToken = this.jwtService.sign(
         { email },
