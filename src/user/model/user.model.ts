@@ -1,4 +1,4 @@
-import { Schema, Document } from 'mongoose';
+import { Schema, Document } from 'mongoose'
 
 const UserSchema = new Schema(
   {
@@ -9,18 +9,20 @@ const UserSchema = new Schema(
     avatar: String,
     phone_number: Number,
     company_name: String,
+    refreshToken: String,
   },
-  { timestamps: true, collection: 'Users' },
-);
+  { timestamps: true, collection: 'users' }
+)
 
-export { UserSchema };
+export { UserSchema }
 
 export interface User extends Document {
-  name: string;
-  email: string;
-  avatar: string;
-  address: string;
-  password: string;
-  phone_number: number;
-  company_name: string;
+  name: string
+  email: string
+  avatar: string
+  address: string
+  password: string
+  phone_number: number
+  company_name: string
+  refreshToken: string
 }
