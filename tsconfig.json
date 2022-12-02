@@ -16,6 +16,13 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@/*": ["src/*"],
+      "@task/*": ["src/task/*"],
+      "@user/*": ["src/user/*"],
+      "@types/*": ["src/types/*"],
+      "@repository/*": ["src/repository/*"]
+    }
   }
 }

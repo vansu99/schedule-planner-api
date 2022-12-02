@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt'
-import { LoginUserDto, CreateUserDto } from '../dto/user.dto'
-import { UserRepository } from '../repositories/user.repository'
+import { LoginUserDto, CreateUserDto } from '@user/dto/user.dto'
+import { UserRepository } from '@user/repositories/user.repository'
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 
 @Injectable()
@@ -26,10 +26,10 @@ export class UserService {
   }
 
   /**
-   * detail Get the user detail
+   * findByLogin Get the user is logged in
    * @author EvanC
    */
-  async detail({ email, password }: LoginUserDto) {
+  async findByLogin({ email, password }: LoginUserDto) {
     const userInfo = await this.userRepository.findByCondition({ email })
     if (!userInfo) {
       throw new HttpException('The user is not found', HttpStatus.UNAUTHORIZED)
@@ -41,5 +41,48 @@ export class UserService {
     }
 
     return userInfo
+  }
+
+  /**
+   * findByEmail Get the user is logged in by email
+   * @author EvanC
+   */
+  async findByEmail(email: string) {
+    return await this.userRepository.findByCondition({
+      email,
+    })
+  }
+
+  /**
+   * update
+   * @author EvanC
+   */
+  async update(filter: any, update: any) {
+    if (update.refreshToken) {
+      update.refreshToken = await bcrypt.hash(this.reverse(update.refreshToken), 10)
+    }
+    return await this.userRepository.findByConditionAndUpdate(filter, update)
+  }
+
+  /**
+   * getUserByRefresh Get the user by refresh token
+   * @author EvanC
+   */
+  async getUserByRefresh(refresh_token: string, email: string) {
+    const user = await this.findByEmail(email)
+    if (!user) {
+      throw new HttpException('Invalid token', HttpStatus.UNAUTHORIZED)
+    }
+    // const is_equal = await bcrypt.compare(this.reverse(refresh_token), user.refreshToken)
+
+    // if (!is_equal) {
+    //   throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED)
+    // }
+
+    return user
+  }
+
+  private reverse(s) {
+    return s.split('').reverse().join('')
   }
 }
